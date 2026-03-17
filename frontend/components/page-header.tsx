@@ -1,33 +1,59 @@
-import { ReactNode } from "react";
+"use client";
 
-import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
-type PageHeaderProps = {
-  eyebrow?: string;
+interface PageHeaderProps {
   title: string;
-  description: string;
-  status?: string;
-  actions?: ReactNode;
-};
+  description?: string;
+  eyebrow?: string;
+  actions?: React.ReactNode;
+  className?: string;
+}
 
-export function PageHeader({ eyebrow, title, description, status, actions }: PageHeaderProps) {
+export function PageHeader({ title, description, eyebrow, actions, className }: PageHeaderProps) {
   return (
-    <header className="space-y-4">
-      <div className="flex flex-wrap items-center gap-2">
-        {eyebrow ? <Badge>{eyebrow}</Badge> : null}
-        {status ? (
-          <span className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-xs font-medium text-cyan-100">
-            {status}
-          </span>
-        ) : null}
-      </div>
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+    <div className={cn("space-y-4 mb-8", className)}>
+      {eyebrow && (
+        <motion.p 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-xs font-bold uppercase tracking-[0.3em] text-cyan-400"
+        >
+          {eyebrow}
+        </motion.p>
+      )}
+      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight text-slate-100 md:text-4xl">{title}</h1>
-          <p className="max-w-2xl text-sm leading-6 text-slate-300 md:text-base">{description}</p>
+          <motion.h1 
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="text-3xl font-extrabold tracking-tight text-white md:text-4xl"
+          >
+            {title}
+          </motion.h1>
+          {description && (
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.1 }}
+              className="max-w-2xl text-slate-400"
+            >
+              {description}
+            </motion.p>
+          )}
         </div>
-        {actions ? <div className="flex items-center gap-2">{actions}</div> : null}
+        {actions && (
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="flex items-center gap-3"
+          >
+            {actions}
+          </motion.div>
+        )}
       </div>
-    </header>
+    </div>
   );
 }

@@ -1,23 +1,35 @@
-import { ReactNode } from "react";
+"use client";
 
-import { GlassCard } from "@/components/glass-card";
+import { LucideIcon } from "lucide-react";
+import { GlassCard } from "./glass-card";
+import { cn } from "@/lib/utils";
 
-type MetricCardProps = {
+interface MetricCardProps {
   label: string;
-  value: string;
-  hint?: string;
-  icon?: ReactNode;
-};
+  value: string | number;
+  icon?: LucideIcon;
+  subValue?: string;
+  trend?: "up" | "down" | "neutral";
+  className?: string;
+}
 
-export function MetricCard({ label, value, hint, icon }: MetricCardProps) {
+export function MetricCard({ label, value, icon: Icon, subValue, trend, className }: MetricCardProps) {
   return (
-    <GlassCard className="group p-4 transition duration-300 hover:-translate-y-1 hover:border-cyan-300/35">
-      <div className="flex items-start justify-between gap-3">
-        <p className="text-xs uppercase tracking-[0.16em] text-slate-400">{label}</p>
-        {icon ? <div className="text-cyan-200">{icon}</div> : null}
+    <GlassCard className={cn("p-4", className)} hover={false}>
+      <div className="flex items-start justify-between">
+        <div>
+          <p className="text-xs font-medium uppercase tracking-wider text-slate-400">{label}</p>
+          <h3 className="mt-1 text-2xl font-bold text-white">{value}</h3>
+          {subValue && (
+            <p className="mt-1 text-xs text-slate-500">{subValue}</p>
+          )}
+        </div>
+        {Icon && (
+          <div className="rounded-lg bg-blue-500/10 p-2 text-blue-400">
+            <Icon size={20} />
+          </div>
+        )}
       </div>
-      <p className="mt-3 text-2xl font-bold text-slate-100">{value}</p>
-      {hint ? <p className="mt-2 text-xs text-slate-300">{hint}</p> : null}
     </GlassCard>
   );
 }

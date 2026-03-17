@@ -1,20 +1,30 @@
-type ResultStatProps = {
+"use client";
+
+import { cn } from "@/lib/utils";
+
+interface ResultStatProps {
   label: string;
-  value: string;
-  tone?: "cyan" | "violet" | "emerald";
-};
+  value: string | number;
+  percentage?: number;
+  color?: string;
+  className?: string;
+}
 
-const TONE_CLASSES: Record<NonNullable<ResultStatProps["tone"]>, string> = {
-  cyan: "text-cyan-200 border-cyan-300/20 bg-cyan-300/10",
-  violet: "text-violet-200 border-violet-300/20 bg-violet-300/10",
-  emerald: "text-emerald-200 border-emerald-300/20 bg-emerald-300/10",
-};
-
-export function ResultStat({ label, value, tone = "cyan" }: ResultStatProps) {
+export function ResultStat({ label, value, percentage, color = "bg-cyan-500", className }: ResultStatProps) {
   return (
-    <div className={`rounded-xl border p-3 ${TONE_CLASSES[tone]}`}>
-      <p className="text-xs uppercase tracking-[0.12em] opacity-80">{label}</p>
-      <p className="mt-2 text-xl font-semibold">{value}</p>
+    <div className={cn("space-y-1.5", className)}>
+      <div className="flex items-center justify-between text-xs">
+        <span className="font-medium text-slate-400">{label}</span>
+        <span className="font-bold text-white">{value}</span>
+      </div>
+      {percentage !== undefined && (
+        <div className="h-1.5 w-full rounded-full bg-white/5 overflow-hidden">
+          <div 
+            className={cn("h-full transition-all duration-500", color)} 
+            style={{ width: `${percentage}%` }}
+          />
+        </div>
+      )}
     </div>
   );
 }

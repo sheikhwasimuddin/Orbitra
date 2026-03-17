@@ -16,37 +16,78 @@ body {
   min-height: 100%;
   color: var(--text);
   background:
-    radial-gradient(65rem 45rem at 12% 12%, rgba(34, 211, 238, 0.16), transparent 46%),
-    radial-gradient(50rem 35rem at 85% 2%, rgba(99, 102, 241, 0.14), transparent 44%),
-    radial-gradient(38rem 30rem at 50% 100%, rgba(14, 165, 233, 0.14), transparent 48%),
-    linear-gradient(160deg, var(--bg-0), var(--bg-1) 50%, var(--bg-2));
-  font-family: "Space Grotesk", "Manrope", "Segoe UI", sans-serif;
+    radial-gradient(100rem 60rem at 0% 0%, rgba(34, 211, 238, 0.12), transparent 50%),
+    radial-gradient(80rem 50rem at 100% 0%, rgba(99, 102, 241, 0.1), transparent 50%),
+    radial-gradient(60rem 40rem at 50% 100%, rgba(14, 165, 233, 0.1), transparent 50%),
+    #020611;
+  font-family: "Space Grotesk", "Inter", system-ui, sans-serif;
+  overflow-x: hidden;
 }
 
 * {
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 main {
   position: relative;
+  z-index: 1;
 }
 
 .app-noise {
   pointer-events: none;
   position: fixed;
   inset: 0;
-  z-index: -1;
-  opacity: 0.05;
-  background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #000 2px, transparent 4px);
+  z-index: 0;
+  opacity: 0.15;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-.star-grid {
-  position: absolute;
-  inset: 0;
+.star-field {
   pointer-events: none;
-  background-image:
-    linear-gradient(rgba(94, 136, 196, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(94, 136, 196, 0.08) 1px, transparent 1px);
-  background-size: 42px 42px;
-  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.75), transparent 85%);
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, #eee, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 40px 70px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 50px 160px, #ddd, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 130px 80px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 160px 120px, #ddd, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  opacity: 0.1;
+  animation: stars 100s linear infinite;
+}
+
+@keyframes stars {
+  from { transform: translateY(0); }
+  to { transform: translateY(-200px); }
+}
+
+.glass-panel {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glow-border {
+  position: relative;
+}
+
+.glow-border::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(45deg, transparent, rgba(34, 211, 238, 0.3), transparent);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.glow-border:hover::after {
+  opacity: 1;
 }
