@@ -1,0 +1,38 @@
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+.env
+
+# Backend
+backend/venv/
+backend/.venv/
+backend/__pycache__/
+
+# Node / Next.js
+node_modules/
+frontend/node_modules/
+.next/
+frontend/.next/
+out/
+dist/
+build/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Model / large files (optional - if you do NOT want to upload model)
+# models/
+# backend/models/
+
+# If using local uploads/cache
+uploads/
+tmp/
+cache/
