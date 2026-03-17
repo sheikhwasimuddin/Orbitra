@@ -1,4 +1,4 @@
-# GeoVision FM
+# Orbitra
 
 Full-stack satellite image analysis platform with:
 
