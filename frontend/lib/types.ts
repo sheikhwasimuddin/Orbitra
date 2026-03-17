@@ -55,3 +55,23 @@ export type PrithviResponse = {
     bands: string[];
   };
 };
+
+export interface BenchmarkMetrics {
+  accuracy: number;
+  latency_ms: number;
+  throughput_fps: number;
+  flops_g: number;
+  memory_mb: number;
+}
+
+export interface ModelBenchmark {
+  name: string;
+  type: string;
+  metrics: BenchmarkMetrics;
+  suitability: string;
+}
+
+export interface BenchmarkResponse {
+  success: boolean;
+  benchmarks: ModelBenchmark[];
+}

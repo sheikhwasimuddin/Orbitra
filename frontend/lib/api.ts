@@ -3,7 +3,18 @@ import {
   CompareResponse,
   PrithviResponse,
   SimilarityResponse,
+  BenchmarkResponse,
 } from "@/lib/types";
+
+// ... existing functions
+
+export async function getBenchmarks(): Promise<BenchmarkResponse> {
+  const res = await fetch(`${API_BASE}/benchmark`, {
+    cache: "no-store",
+    signal: withTimeoutSignal(),
+  });
+  return handleResponse<BenchmarkResponse>(res);
+}
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000/api";
 const REQUEST_TIMEOUT_MS = 60000;

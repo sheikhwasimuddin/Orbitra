@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Network, 
   Layers, 
@@ -11,7 +11,9 @@ import {
   Database,
   Box,
   Brain,
-  Cpu
+  Cpu,
+  Search,
+  Upload
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
@@ -33,6 +35,8 @@ import { GlowButton } from "@/components/glow-button";
 import { MetricCard } from "@/components/metric-card";
 import { BenchmarkCard } from "@/components/benchmark-card";
 import { RadarChartCard } from "@/components/radar-chart-card";
+import { getBenchmarks } from "@/lib/api";
+import { ModelBenchmark } from "@/lib/types";
 
 const mockScatterData = Array.from({ length: 150 }, (_, i) => ({
   x: Math.random() * 10 - 5 + (i % 3 === 0 ? 4 : i % 3 === 1 ? -4 : 0),
@@ -56,8 +60,60 @@ const mockRadarData = [
   { subject: "Entropy", A: 82, fullMark: 100 },
 ];
 
+const CustomTooltip = ({ active, payload }: any) => {
+  if (active && payload && payload.length) {
+    const data = payload[0].payload;
+    return (
+      <div className="bg-slate-950/90 border border-white/10 p-3 rounded-xl shadow-2xl backdrop-blur-md">
+        <p className="text-[10px] uppercase font-bold text-slate-500 mb-1">{data.label || 'Feature Vector'}</p>
+        <div className="flex items-center gap-3">
+           <div className="w-8 h-8 rounded bg-white/5 flex items-center justify-center">
+              <Brain size={12} className="text-cyan-400" />
+           </div>
+           <div>
+              <p className="text-xs font-mono text-white">X: {data.x?.toFixed(3)}</p>
+              <p className="text-xs font-mono text-white">Y: {data.y?.toFixed(3)}</p>
+           </div>
+        </div>
+      </div>
+    );
+  }
+  return null;
+};
+
 export default function EmbeddingsPage() {
   const [activeView, setActiveView] = useState<"2d" | "bars" | "benchmark" | "radar">("2d");
+  const [benchmarks, setBenchmarks] = useState<ModelBenchmark[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const [queriedPoint, setQueriedPoint] = useState<any>(null);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const res = await getBenchmarks();
+        if (res.success) setBenchmarks(res.benchmarks);
+      } catch (err) {
+        console.error("Failed to load benchmarks", err);
+      }
+    }
+    loadData();
+  }, []);
+
+  const handleLocate = async () => {
+    setUploading(true);
+    // Simulate embedding calculation
+    setTimeout(() => {
+      setQueriedPoint({
+        x: Math.random() * 4 - 2,
+        y: Math.random() * 4 - 2,
+        z: 15,
+        label: "Queried Target",
+        color: "#fbbf24",
+        isNew: true
+      });
+      setUploading(false);
+    }, 1500);
+  };
 
   return (
     <div className="space-y-8 pb-10">
@@ -108,41 +164,74 @@ export default function EmbeddingsPage() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
+            className="grid gap-8 lg:grid-cols-12"
           >
-            <GlassCard className="border-white/5 p-8">
-               <div className="flex items-center justify-between mb-8">
-                  <div className="space-y-1">
-                     <h3 className="text-xl font-bold text-white uppercase tracking-[0.1em]">UMAP Dimension Reduction</h3>
-                     <p className="text-sm text-slate-500 italic">Projecting 768-D space into 2D for human-interpretable clustering.</p>
+            <div className="lg:col-span-8">
+              <GlassCard className="border-white/5 p-8">
+                 <div className="flex items-center justify-between mb-8">
+                    <div className="space-y-1">
+                       <h3 className="text-xl font-bold text-white uppercase tracking-[0.1em]">UMAP Dimension Reduction</h3>
+                       <p className="text-sm text-slate-500 italic">Projecting 768-D space into 2D for human-interpretable clustering.</p>
+                    </div>
+                    <div className="flex gap-4">
+                       {["Urban", "Vegetation", "Water", "Your Query"].map((l, i) => (
+                          <div key={l} className="flex items-center gap-2">
+                             <div className={`h-2 w-2 rounded-full ${i === 0 ? "bg-cyan-400" : i === 1 ? "bg-indigo-400" : i === 2 ? "bg-blue-600" : "bg-amber-400"}`} />
+                             <span className="text-[10px] uppercase font-bold text-slate-400">{l}</span>
+                          </div>
+                       ))}
+                    </div>
+                 </div>
+                 <div className="relative h-[500px] w-full bg-slate-950/40 rounded-3xl border border-white/5 p-4 overflow-hidden">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+                        <XAxis type="number" dataKey="x" hide />
+                        <YAxis type="number" dataKey="y" hide />
+                        <ZAxis type="number" dataKey="z" range={[50, 400]} />
+                        <Tooltip content={<CustomTooltip />} cursor={{ strokeDasharray: '3 3' }} />
+                        <Scatter name="Embeddings" data={queriedPoint ? [...mockScatterData, queriedPoint] : mockScatterData}>
+                           {(queriedPoint ? [...mockScatterData, queriedPoint] : mockScatterData).map((entry: any, index: number) => (
+                             <Cell 
+                                key={`cell-${index}`} 
+                                fill={entry.color} 
+                                fillOpacity={entry.isNew ? 1 : 0.6} 
+                                stroke={entry.isNew ? '#fff' : 'none'}
+                                strokeWidth={2}
+                                className={entry.isNew ? "animate-pulse" : ""}
+                             />
+                           ))}
+                        </Scatter>
+                      </ScatterChart>
+                    </ResponsiveContainer>
+                 </div>
+              </GlassCard>
+            </div>
+            <div className="lg:col-span-4 space-y-6">
+               <GlassCard className="border-white/5" hover={false}>
+                  <div className="flex items-center gap-3 mb-6">
+                     <Search className="text-cyan-400" size={20} />
+                     <h4 className="text-sm font-bold text-white uppercase tracking-widest">Locate in Space</h4>
                   </div>
-                  <div className="flex gap-4">
-                     {["Urban", "Vegetation", "Water"].map((l, i) => (
-                        <div key={l} className="flex items-center gap-2">
-                           <div className={`h-2 w-2 rounded-full ${i === 0 ? "bg-cyan-400" : i === 1 ? "bg-indigo-400" : "bg-blue-600"}`} />
-                           <span className="text-[10px] uppercase font-bold text-slate-400">{l}</span>
-                        </div>
-                     ))}
+                  <p className="text-xs text-slate-500 mb-6 leading-relaxed">
+                     Upload a custom tile to calculate its foundation embedding and visualize its relative position in the latent clustering.
+                  </p>
+                  <div 
+                    onClick={handleLocate}
+                    className="group relative cursor-pointer overflow-hidden border-2 border-dashed border-white/5 rounded-2xl p-8 transition-all hover:border-cyan-500/50 bg-white/5"
+                  >
+                     <div className="flex flex-col items-center justify-center gap-3 text-slate-400 group-hover:text-cyan-400 transition-colors">
+                        {uploading ? (
+                          <Zap size={32} className="animate-spin" />
+                        ) : (
+                          <Upload size={32} />
+                        )}
+                        <span className="text-[10px] font-bold uppercase tracking-widest">
+                          {uploading ? "Analyzing Tensors..." : "Select Imagery Tile"}
+                        </span>
+                     </div>
                   </div>
-               </div>
-               <div className="h-[500px] w-full bg-slate-950/40 rounded-3xl border border-white/5 p-4">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-                      <XAxis type="number" dataKey="x" hide />
-                      <YAxis type="number" dataKey="y" hide />
-                      <ZAxis type="number" dataKey="z" range={[50, 400]} />
-                      <Tooltip 
-                        contentStyle={{ backgroundColor: '#020617', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
-                        cursor={{ strokeDasharray: '3 3' }}
-                      />
-                      <Scatter name="Embeddings" data={mockScatterData}>
-                         {mockScatterData.map((entry, index) => (
-                           <Cell key={`cell-${index}`} fill={entry.color} fillOpacity={0.6} />
-                         ))}
-                      </Scatter>
-                    </ScatterChart>
-                  </ResponsiveContainer>
-               </div>
-            </GlassCard>
+               </GlassCard>
+            </div>
           </motion.div>
         )}
 
@@ -217,31 +306,24 @@ export default function EmbeddingsPage() {
             exit={{ opacity: 0, y: -10 }}
             className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
           >
-            <BenchmarkCard 
-               name="Prithvi EO 2.0 Tiny"
-               type="Foundation Model"
-               dims={768}
-               latency="450ms"
-               memory="1.2GB"
-               suitability="Multispectral-temporal feature extraction."
-               highlight
-            />
-            <BenchmarkCard 
-               name="ResNet-50-Standard"
-               type="Baseline kernel"
-               dims={2048}
-               latency="120ms"
-               memory="0.8GB"
-               suitability="Structural land-cover classification."
-            />
-            <BenchmarkCard 
-               name="ViT-Large-EO"
-               type="Custom Transformer"
-               dims={1024}
-               latency="1.2s"
-               memory="4.5GB"
-               suitability="High-resolution localized change detection."
-            />
+            {benchmarks.length > 0 ? (
+              benchmarks.map((b, i) => (
+                <BenchmarkCard 
+                   key={b.name}
+                   name={b.name}
+                   type={b.type}
+                   dims={b.name.includes('Prithvi') ? 768 : b.name.includes('ResNet') ? 2048 : 1024}
+                   latency={`${b.metrics.latency_ms}ms`}
+                   memory={`${(b.metrics.memory_mb / 1024).toFixed(1)}GB`}
+                   suitability={b.suitability}
+                   highlight={i === 0}
+                />
+              ))
+            ) : (
+              <div className="col-span-3 h-64 flex items-center justify-center border-2 border-dashed border-white/5 rounded-3xl">
+                 <p className="text-slate-500 font-bold uppercase tracking-widest animate-pulse">Scanning Registry...</p>
+              </div>
+            )}
           </motion.div>
         )}
 
