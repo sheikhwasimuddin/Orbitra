@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <rect width="640" height="360" fill="#0f172a"/>
+  <g fill="#0ea5e9" opacity="0.75">
+    <ellipse cx="120" cy="150" rx="90" ry="50"/>
+    <ellipse cx="280" cy="220" rx="120" ry="70"/>
+    <ellipse cx="470" cy="140" rx="100" ry="60"/>
+  </g>
+  <text x="20" y="34" fill="#e2e8f0" font-family="sans-serif" font-size="24">Wetland Mosaic E</text>
+</svg>

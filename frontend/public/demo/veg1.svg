@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <rect width="640" height="360" fill="#052e16"/>
+  <g fill="#16a34a" opacity="0.8">
+    <rect x="40" y="60" width="150" height="120"/>
+    <rect x="210" y="80" width="170" height="100"/>
+    <rect x="400" y="70" width="200" height="110"/>
+    <rect x="70" y="200" width="210" height="110"/>
+    <rect x="310" y="210" width="260" height="100"/>
+  </g>
+  <text x="20" y="34" fill="#dcfce7" font-family="sans-serif" font-size="24">Agriculture Patch C</text>
+</svg>

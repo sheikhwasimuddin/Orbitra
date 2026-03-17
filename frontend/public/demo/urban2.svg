@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <rect width="640" height="360" fill="#111827"/>
+  <g stroke="#22d3ee" stroke-width="2" opacity="0.6">
+    <path d="M0 60 H640"/><path d="M0 120 H640"/><path d="M0 180 H640"/><path d="M0 240 H640"/><path d="M0 300 H640"/>
+    <path d="M80 0 V360"/><path d="M160 0 V360"/><path d="M240 0 V360"/><path d="M320 0 V360"/><path d="M400 0 V360"/><path d="M480 0 V360"/><path d="M560 0 V360"/>
+  </g>
+  <text x="20" y="34" fill="#e2e8f0" font-family="sans-serif" font-size="24">Industrial Grid D</text>
+</svg>

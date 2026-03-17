@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e3a8a"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#g)"/>
+  <rect x="70" y="80" width="120" height="200" fill="#64748b" opacity="0.8"/>
+  <rect x="210" y="110" width="90" height="170" fill="#94a3b8" opacity="0.8"/>
+  <rect x="320" y="70" width="150" height="210" fill="#475569" opacity="0.9"/>
+  <text x="20" y="34" fill="#e2e8f0" font-family="sans-serif" font-size="24">Urban Cluster A</text>
+</svg>

@@ -1,0 +1,93 @@
+{
+  "model": "lightweight-demo",
+  "note": "Generated from deterministic synthetic PNG fixtures.",
+  "items": [
+    {
+      "id": "urban_like",
+      "file": "golden/images/urban_like.png",
+      "rgb": [
+        170,
+        150,
+        120
+      ],
+      "top_label": "Cloud Cover",
+      "predictions": [
+        {
+          "label": "Cloud Cover",
+          "confidence": 0.204464
+        },
+        {
+          "label": "Bare Soil",
+          "confidence": 0.175121
+        },
+        {
+          "label": "Urban Area",
+          "confidence": 0.161435
+        }
+      ],
+      "embedding_summary": {
+        "dimension": 256,
+        "mean": 0.6,
+        "std": 0.0
+      }
+    },
+    {
+      "id": "vegetation_like",
+      "file": "golden/images/vegetation_like.png",
+      "rgb": [
+        60,
+        180,
+        70
+      ],
+      "top_label": "Cloud Cover",
+      "predictions": [
+        {
+          "label": "Cloud Cover",
+          "confidence": 0.212875
+        },
+        {
+          "label": "Vegetation",
+          "confidence": 0.208303
+        },
+        {
+          "label": "Bare Soil",
+          "confidence": 0.158765
+        }
+      ],
+      "embedding_summary": {
+        "dimension": 256,
+        "mean": 0.517647,
+        "std": 0.0
+      }
+    },
+    {
+      "id": "water_like",
+      "file": "golden/images/water_like.png",
+      "rgb": [
+        45,
+        80,
+        190
+      ],
+      "top_label": "Water",
+      "predictions": [
+        {
+          "label": "Water",
+          "confidence": 0.214455
+        },
+        {
+          "label": "Cloud Cover",
+          "confidence": 0.213364
+        },
+        {
+          "label": "Urban Area",
+          "confidence": 0.161859
+        }
+      ],
+      "embedding_summary": {
+        "dimension": 256,
+        "mean": 0.321569,
+        "std": 0.0
+      }
+    }
+  ]
+}

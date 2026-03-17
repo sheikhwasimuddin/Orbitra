@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-0: #020611;
+  --bg-1: #051427;
+  --bg-2: #0a213f;
+  --text: #e6edf3;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  color: var(--text);
+  background:
+    radial-gradient(65rem 45rem at 12% 12%, rgba(34, 211, 238, 0.16), transparent 46%),
+    radial-gradient(50rem 35rem at 85% 2%, rgba(99, 102, 241, 0.14), transparent 44%),
+    radial-gradient(38rem 30rem at 50% 100%, rgba(14, 165, 233, 0.14), transparent 48%),
+    linear-gradient(160deg, var(--bg-0), var(--bg-1) 50%, var(--bg-2));
+  font-family: "Space Grotesk", "Manrope", "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+main {
+  position: relative;
+}
+
+.app-noise {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.05;
+  background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #000 2px, transparent 4px);
+}
+
+.star-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(94, 136, 196, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(94, 136, 196, 0.08) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.75), transparent 85%);
+}
