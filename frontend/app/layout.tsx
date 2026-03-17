@@ -8,8 +8,8 @@ import { cn } from "@/lib/utils";
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "GeoVision FM | EO Intelligence Platform",
-  description: "Industrial-ready satellite image analysis platform with lightweight inference and Prithvi embedding workflows.",
+  title: "Orbitra | Premium Satellite AI Platform",
+  description: "Advanced industrial-ready satellite image analysis platform with foundation model intelligence.",
 };
 
 export default function RootLayout({

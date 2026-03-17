@@ -13,7 +13,8 @@ import {
   X,
   Boxes,
   Radar,
-  BrainCircuit
+  BrainCircuit,
+  Satellite
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -38,8 +39,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-white/5 bg-slate-950/20 backdrop-blur-xl lg:block z-50">
         <div className="flex h-full flex-col p-6">
           <Link href="/" className="flex items-center gap-3 px-2 py-4 hover:opacity-80 transition-opacity">
-            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-cyan-400 to-indigo-500" />
-            <span className="text-lg font-bold tracking-tight text-white">GeoVision FM</span>
+            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-cyan-400 to-indigo-500 flex items-center justify-center">
+              <Satellite size={18} className="text-white" />
+            </div>
+            <span className="text-xl font-bold tracking-tighter text-white">ORBITRA</span>
           </Link>
           
           <nav className="mt-8 flex-1 space-y-1">
@@ -78,8 +81,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         {/* Header Mobile */}
         <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-white/5 bg-slate-950/20 px-4 backdrop-blur-lg lg:hidden">
           <div className="flex items-center gap-3">
-            <div className="h-7 w-7 rounded-lg bg-gradient-to-br from-cyan-400 to-indigo-500" />
-            <span className="font-bold text-white">GeoVision FM</span>
+            <div className="h-7 w-7 rounded-lg bg-gradient-to-br from-cyan-400 to-indigo-500 flex items-center justify-center">
+              <Satellite size={14} className="text-white" />
+            </div>
+            <span className="font-bold text-white tracking-tighter">ORBITRA</span>
           </div>
           <button onClick={() => setIsOpen(!isOpen)} className="text-slate-400">
             {isOpen ? <X /> : <Menu />}
@@ -103,8 +108,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <div className="flex h-full flex-col p-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-cyan-400 to-indigo-500" />
-                  <span className="text-lg font-bold text-white">GeoVision FM</span>
+                  <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-cyan-400 to-indigo-500 flex items-center justify-center">
+                    <Satellite size={18} className="text-white" />
+                  </div>
+                  <span className="text-xl font-bold text-white tracking-tighter">ORBITRA</span>
                 </div>
                 <button onClick={() => setIsOpen(false)} className="text-slate-400">
                   <X />

@@ -67,7 +67,7 @@ export default function HomePage() {
                 </span>
               </h1>
               <p className="max-w-xl text-lg text-slate-400 leading-relaxed">
-                GeoVision FM bridges the gap between research foundation models and industrial operations. Analyze, search, and monitor the earth with unprecedented precision.
+                Orbitra bridges the gap between research foundation models and industrial operations. Analyze, search, and monitor the earth with unprecedented precision.
               </p>
             </div>
 

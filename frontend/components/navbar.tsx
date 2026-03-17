@@ -21,7 +21,7 @@ export function Navbar() {
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 px-4 py-4 md:px-6">
         <div className="flex items-center justify-between gap-3">
           <Link href="/" className="text-lg font-bold tracking-[0.08em] text-white">
-            GeoVision FM
+            Orbitra
           </Link>
           <StatusIndicator />
         </div>

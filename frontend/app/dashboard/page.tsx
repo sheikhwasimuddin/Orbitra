@@ -40,7 +40,7 @@ export default function DashboardPage() {
       <PageHeader
         eyebrow="Mission Control"
         title="Operations Overview"
-        description="Real-time telemetry and operational metrics for the GeoVision FM intelligence pipeline."
+        description="Real-time telemetry and operational metrics for the Orbitra intelligence pipeline."
       />
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">

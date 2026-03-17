@@ -132,7 +132,7 @@ export default function EmbeddingsPage() {
         <MetricCard label="Latent Space" value="Vector-12" subValue="HNSW Partitioned" icon={Network} />
         <MetricCard label="Cluster Density" value="0.84" subValue="Silhouette Score" icon={Layers} />
         <MetricCard label="Semantic Depth" value="768" subValue="Dimensionality" icon={Brain} />
-        <MetricCard label="Inference Node" value="A100-GV" subValue="Cloud Native" icon={Cpu} />
+        <MetricCard label="Inference Node" value="A100-ORB" subValue="Cloud Native" icon={Cpu} />
       </div>
 
       <div className="flex gap-4 p-1 bg-white/5 rounded-2xl border border-white/5 w-fit">

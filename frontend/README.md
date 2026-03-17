@@ -1,6 +1,6 @@
-# GeoVision FM Frontend
+# Orbitra Frontend
 
-Next.js 15 + TypeScript frontend for the GeoVision FM platform.
+Next.js 15 + TypeScript frontend for the Orbitra platform.
 
 ## Features
 
