@@ -15,7 +15,7 @@ docker compose up --build
 
 Apps:
 
-- Frontend: http://localhost:3000
+- Frontend: https://orbitra-ashy.vercel.app/
 - Backend: http://localhost:8000
 - Backend docs: http://localhost:8000/docs
 
