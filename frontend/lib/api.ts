@@ -6,17 +6,10 @@ import {
   BenchmarkResponse,
 } from "@/lib/types";
 
-// ... existing functions
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ||
+  "http://localhost:8000/api";
 
-export async function getBenchmarks(): Promise<BenchmarkResponse> {
-  const res = await fetch(`${API_BASE}/benchmark`, {
-    cache: "no-store",
-    signal: withTimeoutSignal(),
-  });
-  return handleResponse<BenchmarkResponse>(res);
-}
-
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000/api";
 const REQUEST_TIMEOUT_MS = 60000;
 
 async function handleResponse<T>(res: Response): Promise<T> {
@@ -33,13 +26,20 @@ async function handleResponse<T>(res: Response): Promise<T> {
   return (await res.json()) as T;
 }
 
-function withTimeoutSignal(timeoutMs = REQUEST_TIMEOUT_MS): AbortSignal {
-  return AbortSignal.timeout(timeoutMs);
+function withTimeoutSignal(timeoutMs = REQUEST_TIMEOUT_MS): AbortSignal | undefined {
+  // Safe fallback for older environments
+  if (typeof AbortSignal !== "undefined" && "timeout" in AbortSignal) {
+    return AbortSignal.timeout(timeoutMs);
+  }
+  return undefined;
 }
 
 export async function healthCheck(): Promise<{ status: string; service: string }> {
-  const res = await fetch(`${API_BASE}/health`, { cache: "no-store", signal: withTimeoutSignal(8000) });
-  return handleResponse(res);
+  const res = await fetch(`${API_BASE}/health`, {
+    cache: "no-store",
+    signal: withTimeoutSignal(8000),
+  });
+  return handleResponse<{ status: string; service: string }>(res);
 }
 
 export async function analyzeImage(file: File): Promise<AnalyzeResponse> {
@@ -85,4 +85,12 @@ export async function runPrithviEmbedding(): Promise<PrithviResponse> {
     signal: withTimeoutSignal(),
   });
   return handleResponse<PrithviResponse>(res);
+}
+
+export async function getBenchmarks(): Promise<BenchmarkResponse> {
+  const res = await fetch(`${API_BASE}/benchmark`, {
+    cache: "no-store",
+    signal: withTimeoutSignal(),
+  });
+  return handleResponse<BenchmarkResponse>(res);
 }
